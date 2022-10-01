@@ -1,6 +1,11 @@
-print("Hello World")
+# Flask application
+import os
+from flask import Flask, render_template
 
-hello = 4
+# Define app
+app = Flask(__name__)
 
-for i in range(hello):
-    print("Hello")
+# Define index route
+@app.route("/")
+def index():
+    return render_template("index.html")
