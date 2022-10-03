@@ -49,27 +49,17 @@ def login():
     session.clear()
 
     # User reached route via POST (as submitting a form via POST)
-    if request.method == "POST":
-        # Ensure username was submitted
-        if not request.form.get("username"):
-            flash("Must provide username")
-            return redirect("/login")
-            
-        # Ensure password was submitted
-        elif not request.form.get("password"):
-            flash("Must provide password")
-            return redirect("/login")
+    if request.method == "POST":    
 
         # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE username =?", request.form.get("username"))
+        user = db.execute("SELECT * FROM users WHERE username =?", request.form.get("username"))
 
         # Ensure username exists and password is correct
-        if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
-            flash("Invalid username and/or password")
+        if len(user) != 1 or not check_password_hash(user[0]["hash"], request.form.get("password")):
             return redirect("/login")
-        
+            
         # Remeber which user has logged in
-        session["user_id"] = rows[0]["id"]
+        session["user_id"] = user[0]["id"]
 
         # Redirect user to home page
         return redirect("/")
