@@ -4,6 +4,16 @@
     Log in
 {% endblock %}
 
+{% with messages = get_flashed_messages() %} 
+    {% if messages %}
+        <header>
+            <div class="alert alert-primary mb-0 text-center" role="alert">
+                {{ messages[0] }}
+            </div>
+        </header>
+    {% endif %}
+{% endwith %}
+
 {% block main %} 
     <h1>Welcome to your Journal</h1>
     <h3>Please login or register</h3>

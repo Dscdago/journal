@@ -1,7 +1,7 @@
 # Flask application
 import os
 from cs50 import SQL
-from flask import Flask, render_template, request, session, redirect
+from flask import Flask, render_template, request, session, redirect, flash
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
@@ -51,7 +51,17 @@ def login():
     # User reached route via POST (as submitting a form via POST)
     if request.method == "POST":
         # Ensure username was submitted
+        if not request.form.get("username"):
+            flash("Must provide username")
+            return redirect("/login")
+            
+        # Ensure password was submitted
+        elif not request.form.get("password"):
+            flash("Must provide password")
+            return redirect("/login")
+        
         return redirect("/")
     else:
         return render_template("login.html")
 
+# Register route
