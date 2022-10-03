@@ -124,3 +124,8 @@ def logout():
 
     # Redirect user to login form
     return redirect("/")
+
+# Journal entry route
+@app.route("/entry")
+def entry():
+    return render_template("entry.html")
