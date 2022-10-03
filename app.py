@@ -83,22 +83,18 @@ def register():
 
         # Check for filled text boxes
         if not username:
-            flash("Username required")
             return redirect("/register")
         
         if not password1:
-            flash("Must add password")
             return redirect("/register")
         
         if not password2:
-            flash("Must confirm your password")
             return redirect("/register")
         
         # Assign password variable
         if password1 == password2:
             password = password1
         else:
-            flash("Passwords must match")
             return redirect("/register")
         
         # Create hash for password
@@ -111,7 +107,6 @@ def register():
             db.execute("INSERT INTO users (username, hash) VALUES(?, ?)", username, password_hash)
             return redirect("/")
         else:
-            flash("Username already exists")
             return redirect("/register")
 
 # Create logout route
