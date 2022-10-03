@@ -23,7 +23,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 library to use Sqlite databse
-# TODO
+db = SQL("sqlite:///journal.db")
 
 # Ensure responses aren't cached
 @app.after_request
@@ -59,9 +59,78 @@ def login():
         elif not request.form.get("password"):
             flash("Must provide password")
             return redirect("/login")
+
+        # Query database for username
+        rows = db.execute("SELECT * FROM users WHERE username =?", request.form.get("username"))
+
+        # Ensure username exists and password is correct
+        if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
+            flash("Invalid username and/or password")
+            return redirect("/login")
         
+        # Remeber which user has logged in
+        session["user_id"] = rows[0]["id"]
+
+        # Redirect user to home page
         return redirect("/")
+        
+    # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("login.html")
 
 # Register route
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    """Register User"""
+    # Render register site
+    if request.method == "GET":
+        return render_template("register.html")
+    else:
+        # want user's username
+        username = request.form.get("username")
+        password1 = request.form.get("password")
+        password2 = request.form.get("confirmation")
+
+        # Check for filled text boxes
+        if not username:
+            flash("Username required")
+            return redirect("/register")
+        
+        if not password1:
+            flash("Must add password")
+            return redirect("/register")
+        
+        if not password2:
+            flash("Must confirm your password")
+            return redirect("/register")
+        
+        # Assign password variable
+        if password1 == password2:
+            password = password1
+        else:
+            flash("Passwords must match")
+            return redirect("/register")
+        
+        # Create hash for password
+        password_hash = generate_password_hash(password)
+
+        # Input username and hash into user databse
+        # Check len of dictionary. If it's 0, then there is no same username. Else there is a username with the same name
+        if len(db.execute("SELECT username FROM users WHERE username == ?", username)) == 0:
+            # if username doesn't exist, add it to the database
+            db.execute("INSERT INTO users (username, hash) VALUES(?, ?)", username, password_hash)
+            return redirect("/")
+        else:
+            flash("Username already exists")
+            return redirect("/register")
+
+# Create logout route
+@app.route("/logout")
+def logout():
+    """Log user out"""
+    
+    # Forget any user_id
+    session.clear()
+
+    # Redirect user to login form
+    return redirect("/")
