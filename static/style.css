@@ -1,0 +1,10 @@
+#journalEntry {
+    height: 50vh;
+    white-space: pre;
+}
+
+#entrybox{
+    height: auto;
+    padding-left: 10vw;
+    padding-right: 10vw;
+}
