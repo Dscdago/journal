@@ -1,6 +1,6 @@
 #journalEntry {
     height: 50vh;
-    white-space: pre;
+    white-space: pre-wrap;
 }
 
 #entrybox{

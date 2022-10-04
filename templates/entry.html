@@ -9,11 +9,11 @@
         <h1>Journal Entry</h1>
         <p>Enter your journal entry here. Once done click submit</p>
         <p>The date will automatically be recorded</p>
+        <h5>Journal entry for: {{month}}/{{day}}/{{year}}</h5>
     </div>
-    <form>
+    <form action="/entry" method="post">
         <div class="mb-3" id="entrybox">
-            <textarea class="form-control" placeholder="Journal Entry" id="journalEntry"></textarea>
-            
+            <textarea class="form-control" placeholder="Journal Entry" id="journalEntry" name="journalEntry"></textarea>   
         </div>
         <button type="submit" id="submitEntry"class="btn btn-outline-secondary">Submit Entry</button>
     </form>

@@ -121,6 +121,29 @@ def logout():
     return redirect("/")
 
 # Journal entry route
-@app.route("/entry")
+@app.route("/entry", methods=["GET", "POST"])
 def entry():
-    return render_template("entry.html")
+    # Get date for entries
+    date = datetime.date.today()
+    year = date.year
+    month = date.month
+    day = date.day
+
+    if request.method == "POST":
+        # Check that entry was submitted
+        entry = request.form.get("journalEntry")
+
+        if not entry:
+            return redirect("/entry")
+
+        customer_id = session["user_id"]
+
+        # add entry into entries database
+        db.execute("INSERT INTO entries (customer_id, date, year, month, day, entry) VALUES(?, ?, ?, ?, ?, ?)",
+                    session["user_id"], date, year, month, day, entry)
+
+        # Once entry is submitted. Redirect user to main page
+        return redirect("/")
+
+    else:
+        return render_template("entry.html", year=year, month=month, day=day)
