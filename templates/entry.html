@@ -5,5 +5,16 @@
 {% endblock %}
 
 {% block main %}
-    Journal entry here
+    <div>
+        <h1>Journal Entry</h1>
+        <p>Enter your journal entry here. Once done click submit</p>
+        <p>The date will automatically be recorded</p>
+    </div>
+    <form>
+        <div class="mb-3" id="entrybox">
+            <textarea class="form-control" placeholder="Journal Entry" id="journalEntry"></textarea>
+            
+        </div>
+        <button type="submit" id="submitEntry"class="btn btn-outline-secondary">Submit Entry</button>
+    </form>
 {% endblock %}
