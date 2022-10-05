@@ -152,4 +152,5 @@ def entry():
             error = True
             return render_template("entry.html",error=error)
         else:
+            # Show normal entry site
             return render_template("entry.html", year=year, month=month, day=day)
