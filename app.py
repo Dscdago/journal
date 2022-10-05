@@ -146,4 +146,10 @@ def entry():
         return redirect("/")
 
     else:
-        return render_template("entry.html", year=year, month=month, day=day)
+        # Check whether there is a entry for today or not
+        dateCheck = db.execute("SELECT date FROM entries WHERE date = ?", date)
+        if len(dateCheck) != 0:
+            error = True
+            return render_template("entry.html",error=error)
+        else:
+            return render_template("entry.html", year=year, month=month, day=day)
