@@ -147,7 +147,7 @@ def entry():
 
     else:
         # Check whether there is a entry for today or not
-        dateCheck = db.execute("SELECT date FROM entries WHERE date = ?", date)
+        dateCheck = db.execute("SELECT date FROM entries WHERE customer_id = ? AND date = ?", session["user_id"], date)
         if len(dateCheck) != 0:
             error = True
             return render_template("entry.html",error=error)
