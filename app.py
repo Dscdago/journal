@@ -1,7 +1,7 @@
 # Flask application
 import os
 from cs50 import SQL
-from flask import Flask, render_template, request, session, redirect, flash
+from flask import Flask, render_template, request, session, redirect
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
@@ -35,10 +35,12 @@ def after_request(response):
 
 
 # Define index route
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 @login_required
 def index():
-    return render_template("index.html")
+    # Get entry data from database. Fill in select menus
+    entries = db.execute("SELECT * FROM entries WHERE customer_id == ?", session["user_id"])
+    return render_template("index.html", entries=entries)
 
 # Login route
 @app.route("/login", methods=["GET", "POST"])
