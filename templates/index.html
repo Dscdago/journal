@@ -25,7 +25,7 @@
                     <tr>
                         <td>{{ entry["journal_id"] }}</td>
                         <td>{{ entry["date"] }}</td>
-                        <td><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#journalEntry" data-bs-journal='{{ entry | tojson }}'>View</button></td>
+                        <td><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#journalEntry" data-myentry='{{ entry | tojson }}'>View</button></td>
                     </tr>
                 {% endfor %}
             </tbody>
@@ -40,7 +40,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    
+                    <p id="entryParagraph"></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -56,13 +56,13 @@
         const button = event.relatedTarget
 
         // Extract info from data-bs-journal
-        const entryNumber = button.getAttribute('data-bs-journal')
+        const entryJSON = event.target.dataset.myentry
         
         // Update modal's content
         const motalTitle = journalModal.querySelector('.modal-title')
         const modalBody = journalModal.querySelector('.modal-body')
 
-        modalTitle.textContent = 'Journal Entry # ${entryNumber}'
-        modalBodyInput.textContent = 'Hello'
+        modalTitle.textContent = 'Journal Entry # ${entryJSON.journal_id}'
+        modalBodyInput.innerHTML = entryJSON["entry"]
     })
 </script>
