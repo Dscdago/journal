@@ -7,6 +7,7 @@
 {% block main %} 
     <h1>Welcome to your journal</h1>
     <div id="entryDates">
+        <!--TODO-->
         Select filters will go here 
     </div>
     <div>
@@ -49,20 +50,3 @@
         </div>
     </div>
 {% endblock %}
-<script>
-    const journalModal = document.getElementById('journalEntry')
-    journalModal.addEventListener('show.bs.modal', event => {
-        // button that triggered modal
-        const button = event.relatedTarget
-
-        // Extract info from data-bs-journal
-        const entryJSON = event.target.dataset.myentry
-        
-        // Update modal's content
-        const motalTitle = journalModal.querySelector('.modal-title')
-        const modalBody = journalModal.querySelector('.modal-body')
-
-        modalTitle.textContent = 'Journal Entry # ${entryJSON.journal_id}'
-        modalBodyInput.innerHTML = entryJSON["entry"]
-    })
-</script>
