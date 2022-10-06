@@ -1,5 +1,5 @@
 window.onload=function(){
-    const entryModal = document.getElementById('journalEntry');
+    const entryModal = document.getElementById('entryModal');
         entryModal.addEventListener('show.bs.modal', event => {
             // Button that triggered the modal
             const button = event.relatedTarget;

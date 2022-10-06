@@ -26,15 +26,15 @@
                     <tr>
                         <td>{{ entry["journal_id"] }}</td>
                         <td>{{ entry["date"] }}</td>
-                        <td><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#journalEntry" data-myentry='{{ entry | tojson }}'>View</button></td>
+                        <td><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#entryModal" data-myentry='{{ entry | tojson }}'>View</button></td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="journalEntry" tabindex="-1">
-        <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal fade" id="entryModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="entryModalLabel">Journal Entry</h1>
