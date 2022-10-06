@@ -35,10 +35,13 @@ def after_request(response):
 
 
 # Define index route
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 @login_required
 def index():
-    return render_template("index.html")
+    # Get entry data from database. Fill in select menus
+    entries = db.execute("SELECT * FROM entries WHERE customer_id == ?", session["user_id"])
+    
+    return render_template("index.html", entries=entries)
 
 # Login route
 @app.route("/login", methods=["GET", "POST"])

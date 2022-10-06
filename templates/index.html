@@ -5,6 +5,64 @@
 {% endblock %} 
 
 {% block main %} 
-    <p>Welcome to your journal</p>
-    <p>This is the starts of my journal application</p>
+    <h1>Welcome to your journal</h1>
+    <div id="entryDates">
+        Select filters will go here 
+    </div>
+    <div>
+        <h2>Entries</h2>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Entry number</th>
+                    <th>Date</th>
+                    <th>View Entry</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!--Loop through database to display entry number and date-->
+                {% for entry in entries %}
+                    <tr>
+                        <td>{{ entry["journal_id"] }}</td>
+                        <td>{{ entry["date"] }}</td>
+                        <td><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#journalEntry" data-bs-journal='{{ entry | tojson }}'>View</button></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="journalEntry" tabindex="-1">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="entryModalLabel">Journal Entry</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
+<script>
+    const journalModal = document.getElementById('journalEntry')
+    journalModal.addEventListener('show.bs.modal', event => {
+        // button that triggered modal
+        const button = event.relatedTarget
+
+        // Extract info from data-bs-journal
+        const entryNumber = button.getAttribute('data-bs-journal')
+        
+        // Update modal's content
+        const motalTitle = journalModal.querySelector('.modal-title')
+        const modalBody = journalModal.querySelector('.modal-body')
+
+        modalTitle.textContent = 'Journal Entry # ${entryNumber}'
+        modalBodyInput.textContent = 'Hello'
+    })
+</script>
