@@ -24,7 +24,7 @@
                 <!--Loop through database to display entry number and date-->
                 {% for entry in entries %}
                     <tr>
-                        <td>{{ entry["journal_id"] }}</td>
+                        <td>{{ entry["entry_id"] }}</td>
                         <td>{{ entry["date"] }}</td>
                         <td><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#entryModal" data-myentry='{{ entry | tojson }}'>View</button></td>
                     </tr>
