@@ -7,8 +7,10 @@ window.onload=function(){
             const journalEntry = button.getAttribute('data-myentry');
             var entryData = JSON.parse(journalEntry);
             var entry = entryData["entry"];
+            var entry_number = entryData["entry_id"];
 
             // Update modal's content
             document.getElementById("entryParagraph").innerHTML = entry;
+            document.getElementById("entryModalLabel").innerHTML = "Journal Entry #" + entry_number;
         });
 }
