@@ -37,10 +37,19 @@ def after_request(response):
 @app.route("/", methods=["GET", "POST"])
 @login_required
 def index():
-    # Get entry data from database. Fill in select menus
-    entries = db.execute("SELECT * FROM entries WHERE customer_id == ?", session["user_id"])
-    return render_template("index.html", entries=entries)
+    if request.method == "POST":
+        # Delete button is pressed.
+        journalNum = request.form["delete_button"]
+        # Delete journal entry
+        db.execute("DELETE FROM entries WHERE journal_id == ?", journalNum)
+        return redirect("/")
 
+    else:
+        # Get entry data from database. Fill in select menus
+        entries = db.execute("SELECT * FROM entries WHERE customer_id == ?", session["user_id"])
+        return render_template("index.html", entries=entries)
+
+        
 # Login route
 @app.route("/login", methods=["GET", "POST"])
 def login():

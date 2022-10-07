@@ -26,7 +26,12 @@
                     <tr>
                         <td>{{ entry["entry_id"] }}</td>
                         <td>{{ entry["date"] }}</td>
-                        <td><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#entryModal" data-myentry='{{ entry | tojson }}'>View</button></td>
+                        <td>
+                            <form method="post">
+                                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#entryModal" data-myentry='{{ entry | tojson }}'>View</button>
+                                <button type="submit" class="btn btn-danger" name="delete_button" value="{{ entry.journal_id }}">Delete</button>
+                            </form>  
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>
